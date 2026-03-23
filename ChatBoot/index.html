@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Triagem Digital · PET Saúde Digital · HEHA</title>
+    <meta
+      name="description"
+      content="Chatbot de triagem anônima para PrEP, PEP e prevenção de HIV. Sem cadastro, sem julgamentos. PET Saúde Digital — HEHA, Maceió-AL."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="src/styles.css" />
+  </head>
+  <body>
+    <!-- SPLASH -->
+    <section
+      id="splash"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Tela de boas-vindas — Triagem Digital PET Saúde"
+    >
+      <!-- Logos institucionais -->
+      <div
+        class="splash-logos"
+        role="group"
+        aria-label="Instituições parceiras"
+      >
+        <!-- Brasão UNCISAL -->
+        <figure class="logo-heha">
+          <span class="logo-heha-icon" aria-hidden="true">
+            <img
+              src="src/images/logo_uncisal.jpeg"
+              alt="Brasão da UNCISAL"
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+          </span>
+          <figcaption class="logo-heha-label">UNCISAL / HEHA</figcaption>
+        </figure>
+
+        <div class="divider"></div>
+
+        <!-- Logo PET Saúde Digital -->
+        <figure class="logo-pet">
+          <span class="logo-pet-icon" aria-hidden="true">
+            <img
+              src="src/images/logo_pet.jpeg"
+              alt="Logo PET Saúde Digital"
+              style="
+                width: 52px;
+                height: 52px;
+                object-fit: contain;
+                border-radius: 8px;
+              "
+            />
+          </span>
+          <figcaption class="logo-pet-label">PET Saúde Digital</figcaption>
+        </figure>
+      </div>
+
+      <!-- Título e descrição -->
+      <h1 class="splash-title">Triagem Digital<br /><span>Anônima</span></h1>
+      <p class="splash-sub">
+        Orientação em saúde sexual e prevenção · Serviço do HEHA / UNCISAL
+      </p>
+
+      <div class="splash-line"></div>
+
+      <p class="splash-badge" role="note" aria-label="Privacidade garantida">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path
+            d="M8 1L2 3.5v4c0 3.5 2.5 6.8 6 7.5 3.5-.7 6-4 6-7.5v-4L8 1zm-1 9.5L4.5 8l1-.95L7 9.6l3.5-3.5 1 .95L7 10.5z"
+          />
+        </svg>
+        100% Anônimo · Nenhum dado salvo
+      </p>
+
+      <button
+        class="splash-btn"
+        onclick="startChat()"
+        type="button"
+        aria-label="Iniciar a triagem anônima"
+      >
+        Iniciar consulta
+      </button>
+
+      <footer class="splash-footer">
+        Hospital Escola Dr. Helvio Auto · Maceió, AL<br />
+        Programa de Educação pelo Trabalho para a Saúde
+      </footer>
+    </section>
+
+    <!-- APP -->
+    <main id="app" role="main">
+      <header class="header" role="banner">
+        <span class="header-avatar" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 2.61 1.41 4.89 3.52 6.17L8 22l2.5-1.5L12 22l1.5-1.5L16 22l-.52-6.83C17.59 13.89 19 11.61 19 9c0-3.87-3.13-7-7-7zm0 2a5 5 0 1 1 0 10A5 5 0 0 1 12 4z"
+              fill="white"
+            />
+            <circle cx="12" cy="9" r="2.5" fill="white" />
+          </svg>
+        </span>
+        <div class="header-info">
+          <h2 id="chat-title">Assistente PET Saúde</h2>
+          <p><span class="online-dot"></span>Disponível agora · HEHA</p>
+        </div>
+        <button
+          class="btn-clear"
+          onclick="clearChat()"
+          aria-label="Limpar histórico da conversa"
+          type="button"
+        >
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M6 2a1 1 0 0 0-1 1v.5H3.5a.5.5 0 0 0 0 1H4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-8h.5a.5.5 0 0 0 0-1H11V3a1 1 0 0 0-1-1H6zm0 1h4v.5H6V3zm-1 2h6v7.5H5V5z"
+            />
+          </svg>
+          Limpar
+        </button>
+      </header>
+
+      <div
+        id="progress-bar"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        aria-label="Progresso da triagem"
+      >
+        <div id="progress-fill"></div>
+      </div>
+
+      <aside class="privacy-bar" role="note" aria-label="Aviso de privacidade">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path
+            d="M8 1L2 3.5v4c0 3.5 2.5 6.8 6 7.5 3.5-.7 6-4 6-7.5v-4L8 1zm-1 9.5L4.5 8l1-.95L7 9.6l3.5-3.5 1 .95L7 10.5z"
+          />
+        </svg>
+        Suas respostas são anônimas. Nenhum dado é coletado ou armazenado.
+      </aside>
+
+      <section
+        id="messages"
+        aria-live="polite"
+        aria-atomic="false"
+        aria-label="Conversa com o assistente"
+        aria-relevant="additions"
+      ></section>
+
+      <nav
+        id="quick-area"
+        aria-label="Opções de resposta"
+        style="display: none"
+      >
+        <p class="qr-label" aria-hidden="true">Escolha uma opção</p>
+        <div
+          class="qr-grid"
+          id="qr-grid"
+          role="group"
+          aria-label="Opções disponíveis"
+        ></div>
+      </nav>
+
+      <form
+        id="input-area"
+        role="search"
+        aria-label="Campo de pergunta livre"
+        onsubmit="return false;"
+      >
+        <textarea
+          id="txt"
+          placeholder="Digite uma mensagem…"
+          rows="1"
+          aria-label="Digite sua dúvida"
+          aria-multiline="true"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+        ></textarea>
+        <button
+          id="send-btn"
+          onclick="sendFreeText()"
+          aria-label="Enviar mensagem"
+          type="button"
+        >
+          <svg viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </button>
+      </form>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
