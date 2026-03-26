@@ -108,8 +108,8 @@ const FLOW = {
     },
     options: [
       { label: "O que é a PrEP?", next: "info_prep" },
+      { label: "Onde encontrar a PrEP em Maceió?", next: "info_locais_prep" },
       { label: "Como chegar ao HEHA?", next: "info_heha" },
-      { label: "Contato do SAE", next: "info_sae" },
       { label: "Recomeçar triagem", next: "start" }
     ]
   },
@@ -161,9 +161,19 @@ const FLOW = {
     ]
   },
  
+  info_locais_prep: {
+    msg: "A PrEP está disponível <strong>gratuitamente pelo SUS</strong> em vários locais de Maceió:\n\n📍 <strong>PAM Salgadinho</strong> — Bloco I (Poço)\n📍 <strong>UBS Telessaúde Caetés</strong> (Benedito Bentes)\n📍 <strong>URS Hamilton Falcão</strong> (Benedito Bentes)\n📍 <strong>UBS Tereza Barbosa</strong> (Eustáquio Gomes)\n📍 <strong>UBS Felício Napoleão</strong> (Aldeia do Índio)\n📍 <strong>UBS José Araújo</strong> (Jacintinho)\n📍 <strong>Clínica da Família Dr. João Fireman</strong> (Jacintinho)\n📍 <strong>UBS Osvaldo Brandão Vilela</strong> (Ponta da Terra)\n📍 <strong>SAE Dr. Marcelo Constant</strong> (Trapiche)\n📍 <strong>HEHA</strong> — Hospital Escola Dr. Helvio Auto (Trapiche da Barra)\n\nProcure a unidade mais próxima de você! Leve RG e Cartão SUS.",
+    options: [
+      { label: "Contato do SAE (Trapiche)", next: "info_sae" },
+      { label: "Como chegar ao HEHA?", next: "info_heha" },
+      { label: "Recomeçar triagem", next: "start" }
+    ]
+  },
+
   info_sae: {
     msg: "O <strong>SAE</strong> (Serviço de Assistência Especializada Dr. Marcelo Constant) atende pacientes com HIV/Aids, hepatites B e C e HTLV.\n\n📞 (82) 3315-3244\n📍 Rua Cônego Fernando Lyra, nº 10 — Trapiche da Barra, Maceió-AL\n🕐 Segunda a sexta, das 7h às 18h\n\nO atendimento é feito por equipe multiprofissional: médicos infectologistas, enfermeira, psicóloga, nutricionista e assistentes sociais.\n\n⚠️ É necessário agendamento prévio.",
     options: [
+      { label: "Outros locais de PrEP em Maceió", next: "info_locais_prep" },
       { label: "Como chegar ao HEHA?", next: "info_heha" },
       { label: "Recomeçar triagem", next: "start" }
     ]
@@ -329,7 +339,7 @@ function sendFreeText() {
 function getFreeReply(text) {
   const t = text.toLowerCase();
   if (t.includes("prep") || t.includes("profilax"))
-    return "A PrEP (Profilaxia Pré-Exposição) é um medicamento tomado diariamente por pessoas HIV negativas com risco substancial de infecção. Quando usada corretamente, reduz o risco de HIV em mais de 99%. É gratuita pelo SUS no HEHA.";
+    return "A PrEP (Profilaxia Pré-Exposição) é um medicamento tomado diariamente por pessoas HIV negativas com risco substancial de infecção. Quando usada corretamente, reduz o risco de HIV em mais de 99%. É gratuita pelo SUS em vários locais de Maceió: PAM Salgadinho (Poço), UBS Telessaúde Caetés e URS Hamilton Falcão (Benedito Bentes), UBS Tereza Barbosa (Eustáquio Gomes), UBS Felício Napoleão (Aldeia do Índio), UBS José Araújo e Clínica da Família Dr. João Fireman (Jacintinho), UBS Osvaldo Brandão Vilela (Ponta da Terra), SAE Dr. Marcelo Constant e HEHA (Trapiche).";
   if (t.includes("pep"))
     return "A PEP (Profilaxia Pós-Exposição) deve ser iniciada em até 72h após uma exposição de risco. Quanto antes, mais eficaz. Procure uma UPA ou o HEHA imediatamente se precisar — é gratuita pelo SUS.";
   if (t.includes("hiv") || t.includes("aids"))
